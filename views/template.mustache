@@ -5,14 +5,13 @@
     <title>Mystery Words</title>
   </head>
   <body>
-    {{#info}}
     <h1>Mystery Words</h1>
     <h3>Guesses Remaining: {{remGuess.guessesRemaining}}</h3>
 
     <div class="game-area">
       {{#wordArr}}
         {{#seen}}
-          <span>{{.letter}}</span>
+          <span>{{letter}}</span>
         {{/seen}}
         {{^seen}}
           <span>_</span>
@@ -24,9 +23,12 @@
         <input type="text" name="nextLetter" value="">
         <button type="submit" name="button"></button>
       </form>
-      <p>letters guessed: {{info.letGuessed}}</p>
+      <p>letters guessed:
+        {{#letGuess}}
+        <span> {{.}}
+        {{/letGuess}}
+      </p>
     </div>
-    {{/info}}
   </body>
 </html>
 
