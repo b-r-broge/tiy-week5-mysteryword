@@ -9,7 +9,9 @@ const parseurl = require('parseurl');
 const mustache = require('mustache-express');
 const fs = require('fs');
 const words = fs.readFileSync('/usr/share/dict/words', 'utf-8').toLowerCase().split('\n').filter(function(a) {
-  if (a.indexOf('\'') > -1) { return false }
+  if (a.indexOf('\'') > -1) {
+    return false
+  }
   if (a.length > 2) {
     return true;
   }
@@ -18,7 +20,9 @@ const words = fs.readFileSync('/usr/share/dict/words', 'utf-8').toLowerCase().sp
 
 const app = express();
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
 app.engine('mustache', mustache());
 app.set('view engine', 'mustache')
 app.set('views', './views')
@@ -30,32 +34,29 @@ app.use(session({
   saveUninitialized: true
 }));
 
-app.use('/*', function (req, res, next) {
-// set variables we want to track
+app.use('/*', function(req, res, next) {
+  // set variables we want to track
   var word = req.session.word;
   var wordArr = req.session.wordArr;
   var remGuess = req.session.remGuess;
   var letGuess = req.session.letGuess;
+  var stillHidden = req.session.stillHidden;
 
-  console.log('word:', word);
-  console.log('wordArr:', wordArr);
-  console.log('guessesRemaining:', remGuess);
-  console.log('All letters Guessed:', letGuess);
+  // console.log('word:', word);
+  // console.log('wordArr:', wordArr);
+  // console.log('guessesRemaining:', remGuess);
+  // console.log('All letters Guessed:', letGuess);
 
-// If they aren't part of the cookie yet, set them in the cookie as well.
+  // If they aren't part of the cookie yet, set them in the cookie as well.
   if (!word) {
     word = req.session.word = "";
     wordArr = req.session.wordArr = [];
-    // wordArr = req.session.wordArr = word.answer.split('').map(function(a) {
-    //   return {letter: a, seen: false};
-    // });
-    remGuess = req.session.remGuess = {guessesRemaining: 8};
+    remGuess = req.session.remGuess = {
+      guessesRemaining: 8
+    };
     letGuessed = req.session.letGuess = [];
-    // letter = req.session.letter = {guess: ""};
+    stillHidden = req.session.stillHidden = 100;
   }
-// Use parseurl to check which url th0ey are on, and how they should behave
-// Don't think I need this yet ^^^
-
 
   next();
 });
@@ -67,30 +68,34 @@ app.get('/mystery', function(req, res) {
     return;
   }
 
-  res.render('template', {word: req.session.word,
-                          wordArr: req.session.wordArr,
-                          remGuess: req.session.remGuess,
-                          letGuess: req.session.letGuess,
-                          // letter: req.session.letter,
-                          visit: req.session.visit});
+  res.render('template', {
+    word: req.session.word,
+    wordArr: req.session.wordArr,
+    remGuess: req.session.remGuess,
+    letGuess: req.session.letGuess,
+    visit: req.session.visit
+  });
 });
 
-app.post('/guess', function (req, res) {
+app.post('/guess', function(req, res) {
   // check if there is a letter that needs to be displayed,
   // then return to the /mystery page
-  console.log('guess submitted: session:', req.session);
-  console.log('guess submitted:', req.body.nextLetter);
+  // console.log('guess submitted: session:', req.session);
+  // console.log('guess submitted:', req.body.nextLetter);
+  console.log('guess submitted');
   var notInWord = true
   req.session.letGuess.push(req.body.nextLetter);
   for (word of req.session.wordArr) {
     if (word.letter === req.body.nextLetter) {
       word.seen = true;
       notInWord = false;
+      req.session.stillHidden--
     }
   }
   if (notInWord) {
     req.session.remGuess.guessesRemaining--
   }
+  console.log('characters still hidden:', req.session.stillHidden);
   res.redirect('/mystery');
 });
 
@@ -123,21 +128,30 @@ app.post('/start', function(req, res) {
       console.log('invalid input');
       break;
   }
-  var wordList =  words.filter(function(a) {
+  var wordList = words.filter(function(a) {
     if (a.length >= low && a.length <= high) {
       return true;
-    } return false;
+    }
+    return false;
   });
-  var word = wordList[Math.floor(Math.random()*wordList.length)];
+  var word = wordList[Math.floor(Math.random() * wordList.length)];
   req.session.word = word;
-  console.log('req.session.word set:', req.session.word);
+  console.log('req.session.word set');
+  req.session.stillHidden = word.length;
   req.session.wordArr = req.session.word.split('').map(function(a) {
-    return {letter: a, seen: false};
+    return {
+      letter: a,
+      seen: false
+    };
   });
-  console.log('req.session.wordArr:', req.session.wordArr);
+  console.log('req.session.wordArr set');
   res.redirect('/mystery');
 });
 
-app.listen(3000, function () {
+// TODO: Add a /mystery/victory and a /mystery/defeat page
+// On both pages, reveal the word (and show missed characters),
+// and have a restart link to the /start page.
+
+app.listen(3000, function() {
   console.log('visit http://localhost:3000/mystery');
 })
