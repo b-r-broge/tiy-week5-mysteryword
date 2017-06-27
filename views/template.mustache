@@ -20,21 +20,16 @@
     </div>
     <div class="guess-area">
       <form class="" action="/guess" method="post">
-        <input type="text" name="nextLetter" value="">
+        <input type="text" name="nextLetter" value="" autofocus="true"
+            required pattern="(?![{{#letGuess}}{{.}}{{/letGuess}}{{#lowGuess}}{{.}}{{/lowGuess}}])[A-z]"
+            title="Please insert one alpha character, excluding any already guessed">
         <button type="submit" name="button"></button>
       </form>
       <p>letters guessed:
         {{#letGuess}}
-        <span> {{.}}
+          {{.}}
         {{/letGuess}}
       </p>
     </div>
   </body>
 </html>
-
-<!-- {info: [req.session.word,
-        req.session.wordArr, {letter: a, seen: false}
-        req.session.remGuess,
-        req.session.letGuessed,
-        req.session.letter,
-        req.session.visit]} -->

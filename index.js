@@ -8,7 +8,7 @@ const session = require('express-session');
 const parseurl = require('parseurl');
 const mustache = require('mustache-express');
 const fs = require('fs');
-const words = fs.readFileSync('/usr/share/dict/words', 'utf-8').toLowerCase().split('\n').filter(function(a) {
+const words = fs.readFileSync('/usr/share/dict/words', 'utf-8').toUpperCase().split('\n').filter(function(a) {
   if (a.indexOf('\'') > -1) {
     return false
   }
@@ -40,6 +40,7 @@ app.use('/*', function(req, res, next) {
   var wordArr = req.session.wordArr;
   var remGuess = req.session.remGuess;
   var letGuess = req.session.letGuess;
+  var lowGuess = req.session.lowerGuess;
   var stillHidden = req.session.stillHidden;
 
   // console.log('word:', word);
@@ -55,6 +56,7 @@ app.use('/*', function(req, res, next) {
       guessesRemaining: 8
     };
     letGuessed = req.session.letGuess = [];
+    lowGuess = req.session.lowerGuess = [];
     stillHidden = req.session.stillHidden = 100;
   }
 
@@ -73,20 +75,23 @@ app.get('/mystery', function(req, res) {
     wordArr: req.session.wordArr,
     remGuess: req.session.remGuess,
     letGuess: req.session.letGuess,
+    lowGuess: req.session.lowerGuess,
     visit: req.session.visit
   });
 });
-
+ 
 app.post('/guess', function(req, res) {
   // check if there is a letter that needs to be displayed,
   // then return to the /mystery page
   // console.log('guess submitted: session:', req.session);
   // console.log('guess submitted:', req.body.nextLetter);
-  console.log('guess submitted');
+  var guess = req.body.nextLetter.toUpperCase();
+  console.log('guess submitted:', guess);
   var notInWord = true
-  req.session.letGuess.push(req.body.nextLetter);
+  req.session.letGuess.push(guess);
+  req.session.lowerGuess.push(guess.toLowerCase())
   for (word of req.session.wordArr) {
-    if (word.letter === req.body.nextLetter) {
+    if (word.letter === guess) {
       word.seen = true;
       notInWord = false;
       req.session.stillHidden--
