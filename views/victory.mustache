@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Mystery Words</title>
+</head>
+
+<body>
+  <h1>Mystery Words</h1>
+  <h2>VICTORY!</h2>
+  <h3 class="green">Guesses Remaining: {{remGuess.guessesRemaining}}</h3>
+
+  <div class="game-area">
+    {{#wordArr}}
+      {{#seen}}
+        <span class="green">{{letter}}</span>
+      {{/seen}}
+      {{^seen}}
+      <span>_</span>
+      {{/seen}}
+    {{/wordArr}}
+  </div>
+  <div class="guess-area">
+    <p>letters guessed:
+      {{#letGuess}}
+        {{.}}
+      {{/letGuess}}
+    </p>
+  </div>
+  <div class="nav">
+    <a href="/restart">Start again!</a>
+    <a href="/champion">Check the Leader Board</a>
+  </div>
+</body>
+
+</html>
