@@ -88,6 +88,7 @@ h1 {
 
 .diff button:hover {
   background: #87ACD3;
+  border: 1px solid white;
 }
 
 /*Game page styling*/
@@ -158,6 +159,7 @@ h4 {
   display: flex;
   justify-content: center;
   margin: -5vh auto -15vh auto;
+  padding-top: -2.5vh;
 }
 
 .winner form {
@@ -171,4 +173,22 @@ h4 {
 
 .winner button {
   display: none;
+}
+
+/*champion page*/
+ol {
+  margin: 0 auto;
+  color: lightblue;
+  font-size: 2.5em;
+  font-weight: bolder;
+  text-shadow:
+  3px 3px 0 #000,
+  -1px -1px 0 #000,
+  1px -1px 0 #000,
+  -1px 1px 0 #000,
+  1px 1px 0 #000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
