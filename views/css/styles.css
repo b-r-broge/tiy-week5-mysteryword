@@ -1,0 +1,174 @@
+@import url('https://fonts.googleapis.com/css?family=Bad+Script');
+
+
+/*Common Styling*/
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Bad Script', cursive;
+  background: url('../images/background.jpg') center/cover fixed;
+  color: white;
+}
+
+h1 {
+  font-weight: lighter;
+  font-size: 4em;
+  text-align: center;
+  margin: 2.5vh auto;
+}
+
+.nav {
+  width: 100vw;
+  height: 10vh;
+  position: fixed;
+  left: 0px;
+  bottom: 0px;
+  background: #27203A;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav a {
+  color: white;
+  text-align: center;
+  margin: 0 2.5vw;
+}
+
+/*Start page styling*/
+.instructions {
+  width: 80vw;
+  margin: 2.5vh auto;
+}
+
+.instructions h3 {
+  text-align: center;
+  font-weight: lighter;
+  font-size: 2em;
+  color: yellow;
+  text-shadow:
+  3px 3px 0 #111,
+  -1px -1px 0 #111,
+  1px -1px 0 #111,
+  -1px 1px 0 #111,
+  1px 1px 0 #111;
+  margin: 0;
+}
+
+.instructions p {
+  font-size: 1.2em;
+  margin: .5em;
+  text-shadow:
+  3px 3px 0 #111,
+  -1px -1px 0 #111,
+  1px -1px 0 #111,
+  -1px 1px 0 #111,
+  1px 1px 0 #111;
+  color: lightblue;
+}
+
+
+.diff {
+  display: flex;
+  justify-content: center;
+}
+
+.diff button {
+  margin: 3vh 2.5vw;
+  background: #8FA876;
+  border: 1px solid #94F434;
+  border-radius: 1vw;
+  width: 15vw;
+  height: 10vh;
+  font-size: 1.7em;
+  font-weight: bolder;
+  font-family: 'Bad Script', cursive;
+}
+
+.diff button:hover {
+  background: #87ACD3;
+}
+
+/*Game page styling*/
+.game-area {
+  text-align: center;
+  font-size: 2.5em;
+  font-weight: bold;
+  color: lightblue;
+  text-shadow:
+  3px 3px 0 #111,
+  -1px -1px 0 #111,
+  1px -1px 0 #111,
+  -1px 1px 0 #111,
+  1px 1px 0 #111;
+}
+
+.guess-area {
+  display: flex;
+  justify-content: center;
+  margin: 5vh auto;
+}
+
+.guess-area button {
+  display: none;
+}
+
+.guess-area input {
+  width: 2em;
+  height: 2em;
+  font-size: 1.5em;
+  text-align: center;
+  font-family: 'Bad Script', cursive;
+}
+
+.game-info {
+  display: flex;
+  justify-content: space-around;
+  margin: 15vh auto 5vh auto;
+  font-size: 1.5em;
+}
+
+/*victory and defeat pages*/
+h2 {
+  text-align: center;
+  font-size: 2.2em;
+  text-shadow:
+  3px 3px 0 #111,
+  -1px -1px 0 #111,
+  1px -1px 0 #111,
+  -1px 1px 0 #111,
+  1px 1px 0 #111;
+}
+
+.red {
+  color: red;
+}
+
+.green {
+  color: #8AE234;
+}
+
+h4 {
+  text-align: center;
+  font-size: 1.5em;
+}
+
+.winner {
+  display: flex;
+  justify-content: center;
+  margin: -5vh auto -15vh auto;
+}
+
+.winner form {
+  margin: 0;
+}
+
+.winner input {
+  height: 1.5em;
+  font-size: 1.2em;
+}
+
+.winner button {
+  display: none;
+}

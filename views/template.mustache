@@ -4,11 +4,11 @@
 <head>
   <meta charset="utf-8">
   <title>Mystery Words</title>
+  <link rel="stylesheet" href="views/css/styles.css">
 </head>
 
 <body>
   <h1>Mystery Words</h1>
-  <h3>Guesses Remaining: {{remGuess.guessesRemaining}}</h3>
 
   <div class="game-area">
     {{#wordArr}}
@@ -22,14 +22,21 @@
   </div>
   <div class="guess-area">
     <form class="" action="/guess" method="post">
-      <input type="text" name="nextLetter" value="" autofocus="true" required pattern="(?![{{#letGuess}}{{.}}{{/letGuess}}{{#lowGuess}}{{.}}{{/lowGuess}}])[A-z]" title="Please insert one alpha character, excluding any already guessed">
+      <input type="text" name="nextLetter" value="" maxlength="1" autofocus="true" required pattern="(?![{{#letGuess}}{{.}}{{/letGuess}}{{#lowGuess}}{{.}}{{/lowGuess}}])[A-z]" title="Please insert one alpha character, excluding any already guessed">
       <button type="submit" name="button"></button>
     </form>
-    <p>letters guessed:
-      {{#letGuess}}
+  </div>
+  <div class="game-info">
+    <div class="remaining-guesses">
+      <h3>Guesses Remaining: {{remGuess.guessesRemaining}}</h3>
+    </div>
+    <div class="guessed-letters">
+      <h3>letters guessed:
+        {{#letGuess}}
         {{.}}
-      {{/letGuess}}
-    </p>
+        {{/letGuess}}
+      </h3>
+    </div>
   </div>
   <div class="nav">
     <a href="/restart">Start again!</a>

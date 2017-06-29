@@ -4,13 +4,12 @@
 <head>
   <meta charset="utf-8">
   <title>Mystery Words</title>
+  <link rel="stylesheet" href="views/css/styles.css">
 </head>
 
 <body>
   <h1>Mystery Words</h1>
-  <h2>DEFEAT!</h2>
-  <h3 class="red">Guesses Remaining: {{remGuess.guessesRemaining}}</h3>
-
+  <h2 class="red">DEFEAT!</h2>
   <div class="game-area">
     {{#wordArr}}
       {{#seen}}
@@ -21,12 +20,17 @@
       {{/seen}}
     {{/wordArr}}
   </div>
-  <div class="guess-area">
-    <p>letters guessed:
-      {{#letGuess}}
+  <div class="game-info">
+    <div class="remaining-guesses red">
+      <h3>Guesses Remaining: {{remGuess.guessesRemaining}}</h3>
+    </div>
+    <div class="guessed-letters">
+      <h3>letters guessed:
+        {{#letGuess}}
         {{.}}
-      {{/letGuess}}
-    </p>
+        {{/letGuess}}
+      </h3>
+    </div>
   </div>
   <div class="nav">
     <a href="/restart">Start again!</a>

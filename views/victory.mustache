@@ -4,29 +4,35 @@
 <head>
   <meta charset="utf-8">
   <title>Mystery Words</title>
+  <link rel="stylesheet" href="views/css/styles.css">
 </head>
 
 <body>
   <h1>Mystery Words</h1>
-  <h2>VICTORY!</h2>
-  <h3 class="green">Guesses Remaining: {{remGuess.guessesRemaining}}</h3>
-
+  <h2 class="green">VICTORY!</h2>
   <div class="game-area">
     {{#wordArr}}
       {{#seen}}
         <span class="green">{{letter}}</span>
       {{/seen}}
-      {{^seen}}
-      <span>_</span>
-      {{/seen}}
     {{/wordArr}}
   </div>
-  <div class="guess-area">
-    <p>letters guessed:
-      {{#letGuess}}
+  <h4>Add your name to the hall of fame!</h4>
+  <form class="winner" action="/champion" method="post">
+    <input type="text" name="name" value="" autofocus="true" placeholder="Enter your name here">
+    <button type="submit" name="button"></button>
+  </form>
+  <div class="game-info">
+    <div class="remaining-guesses green">
+      <h3>Guesses Remaining: {{remGuess.guessesRemaining}}</h3>
+    </div>
+    <div class="guessed-letters">
+      <h3>letters guessed:
+        {{#letGuess}}
         {{.}}
-      {{/letGuess}}
-    </p>
+        {{/letGuess}}
+      </h3>
+    </div>
   </div>
   <div class="nav">
     <a href="/restart">Start again!</a>

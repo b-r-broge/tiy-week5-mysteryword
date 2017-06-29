@@ -7,8 +7,10 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const parseurl = require('parseurl');
 const mustache = require('mustache-express');
+const models = require('./models');
 const fs = require('fs');
 
+const victors = models.leaderboard;
 var mstchObj = {}
 const words = fs.readFileSync('/usr/share/dict/words', 'utf-8').toUpperCase().split('\n').filter(function(a) {
   if (a.indexOf('\'') > -1) {
@@ -28,6 +30,7 @@ app.use(bodyParser.urlencoded({
 app.engine('mustache', mustache());
 app.set('view engine', 'mustache')
 app.set('views', './views')
+app.use(express.static(__dirname));
 
 // build a session
 app.use(session({
@@ -173,6 +176,55 @@ app.get('/victory', function(req, res) {
 
 app.get('/defeat', function(req, res) {
   res.render('defeat', mstchObj);
+});
+
+app.post('/champion', function(req, res) {
+  console.log('victor:', req.body.name);
+  console.log('points:', req.session.word.length)
+  victors.findOne({
+    where: {
+      name: req.body.name.toUpperCase()
+    }
+  }).then(function(inTable) {
+    if (inTable) {
+      console.log('name already in table, adding to points');
+      console.log('existing points:', inTable.dataValues.points);
+      console.log('new points:', req.session.word.length);
+      victors.update({
+        points: inTable.dataValues.points + req.session.word.length
+      }, {
+        where: {
+          name: req.body.name.toUpperCase()
+        }
+      }).then(function(updated) {
+        console.log('updated points');
+        res.redirect('/champion')
+      })
+    } else {
+      console.log('name not in table, adding new name');
+      const newName = victors.build({
+        name: req.body.name.toUpperCase(),
+        points: req.session.word.length
+      });
+      newName.save().then(function(newAdd) {
+        console.log('new name added');
+        res.redirect('/champion');
+      });
+    }
+  });
+});
+
+app.get('/champion', function(req, res) {
+  victors.findAll({
+    order: [
+      ['points', 'DESC']
+    ]
+  }).then(function(victorList) {
+    console.log('rendering champion page')
+    res.render('champion', {
+      victors: victorList
+    });
+  })
 });
 
 app.listen(3000, function() {
