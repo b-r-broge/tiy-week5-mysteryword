@@ -178,6 +178,7 @@ h4 {
 /*champion page*/
 ol {
   margin: 0 auto;
+  margin-bottom: 12vh;
   color: lightblue;
   font-size: 2.5em;
   font-weight: bolder;
