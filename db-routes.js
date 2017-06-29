@@ -38,7 +38,9 @@ router.post('/champion', function(req, res) {
         res.redirect('/champion');
       });
     }
-  });
+  }).catch(function(error) {
+    res.redirect('/champion');
+  })
 });
 
 router.get('/champion', function(req, res) {
@@ -51,8 +53,9 @@ router.get('/champion', function(req, res) {
     res.render('champion', {
       victors: victorList
     });
-  }).catch(function(things) {
+  }).catch(function(error) {
    console.log('error');
+   res.render('champion', {error: "No database established"});
  });
 });
 
