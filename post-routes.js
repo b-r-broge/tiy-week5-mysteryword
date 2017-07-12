@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const fs = require('fs');
 
-const words = fs.readFileSync('/usr/share/dict/words', 'utf-8').toUpperCase().split('\n').filter(function(a) {
+const words = fs.readFileSync('./dict', 'utf-8').toUpperCase().split('\n').filter(function(a) {
   if (a.indexOf('\'') > -1) {
     return false
   }
