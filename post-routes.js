@@ -60,7 +60,7 @@ router.post('/start', function(req, res) {
       low = 8;
       high = 10;
       break;
-    case "insane":
+    case "most":
       low = 10;
       break;
     default:
