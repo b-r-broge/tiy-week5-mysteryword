@@ -9,7 +9,7 @@ router.use(session({
   saveUninitialized: true
 }));
 
-router.use('/*', function(req, res, next) {
+router.use(function(req, res, next) {
   // set variables we want to track
   var word = req.session.word;
 
