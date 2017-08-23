@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/b-r-broge/tiy-week5-mysteryword#readme",
   "engine": {
-    "node": "v4.2.6"
+    "node": "v8.1.4"
   },
   "dependencies": {
     "body-parser": "^1.17.2",
